@@ -28,4 +28,12 @@ describe('Give `DogShow`', () => {
 
     });
 
+    it('should contain a `.previous-button`, a `DogGallery`, and a `.next-button`', () => {
+
+        expect(component.find('.previous-button').type()).to.equal('button');
+        expect(component.find('.next-button').type()).to.equal('button');
+        expect(component.find('DogGallery').exists()).to.be.true();
+        
+    })
+
 });
