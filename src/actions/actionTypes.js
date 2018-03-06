@@ -1,0 +1,1 @@
+export const SEARCH_BREED = 'SEARCH_BREED'
