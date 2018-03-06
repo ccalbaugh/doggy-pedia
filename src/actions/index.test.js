@@ -25,7 +25,7 @@ it('creates an action to search for a breed', () => {
 
 it('creates an async action to fetch all breeds', () => {
 
-    const expectedActionS = [{ type: types.FETCH_ALL_BREEDS, breeds: mockResponse }];
+    const expectedActions = [{ type: types.FETCH_ALL_BREEDS, breeds: mockResponse }];
 
     return store.dispatch(actions.fetchAllBreeds())
 
