@@ -34,4 +34,10 @@ describe('Give `App`', () => {
 
     });
 
+    it('should contain a `DogShow`', () => {
+
+        expect(component.find('DogShow').exists()).to.be.true()
+
+    })
+
 });
