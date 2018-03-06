@@ -24,7 +24,7 @@ describe('Give `DogWiki`', () => {
 
     it('should exist as a `section` with a specific class name', () => {
 
-        expect(component.find('.dog-show').type()).to.equal('section');
+        expect(component.find('.dog-wiki').type()).to.equal('section');
 
     });
 
