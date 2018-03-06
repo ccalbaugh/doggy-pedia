@@ -2,7 +2,7 @@ import React from 'react'
 
 function DogSearchForm() {
     return (
-        <form className="DogSeachForm">
+        <form className="dog-search-form">
         </form>
     );
 }
