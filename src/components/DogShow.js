@@ -10,6 +10,7 @@ export class DogShow extends Component {
     }
 
     render() {
+        console.log('Breeds List: ', this.props.breedsList);
         return (
             <section className="dog-show">
                 <button className="previous-button">Prev</button>
@@ -20,4 +21,10 @@ export class DogShow extends Component {
     }
 }
 
-export default connect(null, { fetchAllBreeds })(DogShow);
+function mapStateToProps(state) {
+    return {
+        breedsList: state.allBreeds
+    };
+}
+
+export default connect(mapStateToProps, { fetchAllBreeds })(DogShow);
