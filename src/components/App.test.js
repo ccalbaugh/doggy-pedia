@@ -22,9 +22,15 @@ describe('Give `App`', () => {
         component = renderComponent();
     })
 
-    it('should exist as a `main` tag', () => {
+    it('should exist as a `main` with a specific class name', () => {
 
-        expect(component.type()).to.equal('main');
+        expect(component.find('.dog-app').type()).to.equal('main');
+
+    });
+
+    it('should contain a `DogSearchForm', () => {
+
+        expect(component.find('DogSearchForm').exists()).to.be.true()
 
     });
 
