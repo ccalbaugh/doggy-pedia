@@ -28,4 +28,11 @@ describe('Give `DogSearchForm`', () => {
 
     });
 
+    it('should contain a `input` and a `button` with specific class names', () => {
+
+        expect(component.find('.dog-search-input').type()).to.equal('input');
+        expect(component.find('.dog-search-button').type()).to.equal('button');
+        
+    })
+
 });
