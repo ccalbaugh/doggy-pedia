@@ -2,9 +2,9 @@ import React from 'react'
 import { expect } from 'code'
 import { shallow } from 'enzyme'
 import sinon from 'sinon'
-import App from './App'
+import DogApp from './DogApp'
 
-describe('Give `App`', () => {
+describe('Give `DogApp`', () => {
 
     let component
 
@@ -15,7 +15,7 @@ describe('Give `App`', () => {
     }
 
     function renderComponent(props = requiredProps()) {
-        return shallow(<App {...props} />);
+        return shallow(<DogApp {...props} />);
     }
 
     beforeEach(() => {
