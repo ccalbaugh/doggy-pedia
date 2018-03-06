@@ -1,4 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import DogApp from './components/DogApp'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<DogApp />, document.getElementById('root'));

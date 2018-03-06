@@ -1,7 +1,6 @@
 import React from 'react'
-import DogSearchForm from './DogSearchForm'
 
-function App() {
+function DogApp() {
     return (
         <main className="DogApp">
             <DogSearchForm />
@@ -9,4 +8,4 @@ function App() {
     );
 }
 
-export default App;
+export default DogApp;
