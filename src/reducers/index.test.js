@@ -22,4 +22,12 @@ describe('Given `dogReducer`', () => {
 
     });
 
+    it('should handle `SEARCH_BREED`', () => {
+
+        const expectedState = { allBreeds: mockBreeds, currentBreed: [ 'akita' ] };
+
+        expect(dogReducer({ allBreeds: mockBreeds }, { type: types.SEARCH_BREED, breed: 'akita' })).to.equal(expectedState);
+        
+    })
+
 });
