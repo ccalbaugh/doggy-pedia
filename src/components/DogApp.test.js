@@ -34,9 +34,9 @@ describe('Given `DogApp`', () => {
 
     });
 
-    it('should contain a `DogShow`', () => {
+    it('should contain a `Connected DogShow`', () => {
 
-        expect(component.find('DogShow').exists()).to.be.true()
+        expect(component.find('Connect(DogShow)').exists()).to.be.true()
 
     })
 
@@ -44,6 +44,6 @@ describe('Given `DogApp`', () => {
 
         expect(component.find('DogWiki').exists()).to.be.true()
 
-    })
+    });
 
 });
