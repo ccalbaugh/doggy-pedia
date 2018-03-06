@@ -28,4 +28,18 @@ describe('Given `DogWiki`', () => {
 
     });
 
+    it('should contain a `DraftEditor`', () => {
+
+        expect(component.find('DraftEditor').exists()).to.be.true()
+        
+    });
+
+    it('should contain `editorState`', () => {
+        
+        component.setState({ editorState: {} })
+
+        expect(component.state()).to.equal({ editorState: {} })
+
+    })
+
 });

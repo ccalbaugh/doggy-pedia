@@ -34,6 +34,6 @@ describe('Given `DogShow`', () => {
         expect(component.find('.next-button').type()).to.equal('button');
         expect(component.find('DogGallery').exists()).to.be.true();
         
-    })
+    });
 
 });
