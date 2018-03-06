@@ -7,14 +7,18 @@ function fetchAllBreeds(state, action) {
     };
 }
 
-export default function(
-    state = {
-        allBreeds: [],
-        currentBreed: '',
-        breedImages: []
-    }, action) {
+function searchBreed(state, action) {
+    const matchingBreed = new RegExp(action.breed, 'gi');
+    return {
+        ...state,
+        currentBreed: state.allBreeds.filter(breed => breed.match(matchingBreed))
+    };
+}
+
+export default function(state = {}, action) {
     const actionsHandler = {
-        [types.FETCH_ALL_BREEDS]: fetchAllBreeds
+        [types.FETCH_ALL_BREEDS]: fetchAllBreeds,
+        [types.SEARCH_BREED]: searchBreed
     };
 
     const reducer = actionsHandler[action.type];
