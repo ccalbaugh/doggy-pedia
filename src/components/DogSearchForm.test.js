@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import sinon from 'sinon'
 import DogSearchForm from './DogSearchForm'
 
-describe('Give `DogSearchForm`', () => {
+describe('Given `DogSearchForm`', () => {
 
     let component
 
@@ -33,6 +33,12 @@ describe('Give `DogSearchForm`', () => {
         expect(component.find('.dog-search-input').type()).to.equal('input');
         expect(component.find('.dog-search-button').type()).to.equal('button');
         
+    })
+
+    it('should contain state with a currentInput', () => {
+
+        expect(component.state()).to.equal({ currentInput: '' })
+
     })
 
 });

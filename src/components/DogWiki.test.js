@@ -4,7 +4,7 @@ import { shallow } from 'enzyme'
 import sinon from 'sinon'
 import DogWiki from './DogWiki'
 
-describe('Give `DogWiki`', () => {
+describe('Given `DogWiki`', () => {
 
     let component
 
