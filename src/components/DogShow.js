@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import { fetchAllBreeds } from '../actions';
 import DogGallery from './DogGallery'
 
-function DogShow() {
-    return (
-        <section className="dog-show">
-            <button className="previous-button">Prev</button>
-            <DogGallery />
-            <button className="next-button">Next</button>            
-        </section>
-    );
+export class DogShow extends Component {
+
+    componentDidMount() {
+        this.props.fetchAllBreeds();
+    }
+
+    render() {
+        return (
+            <section className="dog-show">
+                <button className="previous-button">Prev</button>
+                <DogGallery />
+                <button className="next-button">Next</button>            
+            </section>
+        );
+    }
 }
 
-export default DogShow;
+export default connect(null, { fetchAllBreeds })(DogShow);
