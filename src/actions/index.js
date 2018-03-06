@@ -11,6 +11,7 @@ export function fetchAllBreeds() {
     return dispatch => {
         return fetch('https://dog.ceo/api/breeds/list')
         .then(res => res.json())
+        .then(data => data.message)
         .then(breeds => dispatch({ type: types.FETCH_ALL_BREEDS, breeds }))
     };
 }
