@@ -7,7 +7,12 @@ function fetchAllBreeds(state, action) {
     };
 }
 
-export default function(state = {}, action) {
+export default function(
+    state = {
+        allBreeds: [],
+        currentBreed: '',
+        breedImages: []
+    }, action) {
     const actionsHandler = {
         [types.FETCH_ALL_BREEDS]: fetchAllBreeds
     };
