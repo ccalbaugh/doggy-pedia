@@ -1,2 +1,2 @@
 export const SEARCH_BREED = 'SEARCH_BREED';
-export const FETCH_ALL_BREEEDS = 'FETCH_ALL_BREEEDS';
+export const FETCH_ALL_BREEDS = 'FETCH_ALL_BREEDS';
