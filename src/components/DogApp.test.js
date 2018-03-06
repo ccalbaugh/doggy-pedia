@@ -40,4 +40,10 @@ describe('Give `App`', () => {
 
     })
 
+    it('should contain a `DogWiki`', () => {
+
+        expect(component.find('DogWiki').exists()).to.be.true()
+
+    })
+
 });
