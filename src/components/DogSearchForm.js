@@ -1,6 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { searchBreed } from '../actions';
 
-class DogSearchForm extends Component {
+function handleSubmit(e) {
+    e.preventDefault();
+    this.props.searchBreed(this.state.currentInput);
+    this.setState({ currentInput: '' });
+}
+
+export class DogSearchForm extends Component {
 
     state = {
         currentInput: ''
@@ -8,7 +16,10 @@ class DogSearchForm extends Component {
 
     render() {
         return (
-            <form className="dog-search-form">
+            <form 
+                className="dog-search-form"
+                onSubmit={handleSubmit.bind(this)}    
+            >
                 <input 
                     type="text" 
                     className="dog-search-input"
@@ -25,4 +36,4 @@ class DogSearchForm extends Component {
     }
 }
 
-export default DogSearchForm;
+export default connect(null, { searchBreed })(DogSearchForm);
