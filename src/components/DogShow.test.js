@@ -2,19 +2,25 @@ import React from 'react'
 import { expect } from 'code'
 import { shallow } from 'enzyme'
 import sinon from 'sinon'
-import ConnectedDogShow, { DogShow } from './DogShow'
+import { DogShow } from './DogShow'
 
 describe('Given `DogShow`', () => {
 
     let component,
         sandbox,
         mockFetchAllBreeds,
-        mockFetchRandomBreedImage;
+        mockFetchCurrentBreedImages;
+
+    const mockBreedImages = [
+        "https://dog.ceo/api/img/akita/512px-Ainu-Dog.jpg",
+        "https://dog.ceo/api/img/akita/Akita_Dog.jpg",
+        "https://dog.ceo/api/img/akita/Akita_Inu_dog.jpg"
+    ];
 
     function requiredProps(overrides = {}) {
         return {
             fetchAllBreeds: mockFetchAllBreeds, 
-            fetchRandomBreedImage: mockFetchRandomBreedImage,
+            fetchCurrentBreedImages: mockFetchCurrentBreedImages,
             ...overrides
         };
     }
@@ -27,7 +33,7 @@ describe('Given `DogShow`', () => {
     beforeEach(() => {
         sandbox = sinon.createSandbox();
         mockFetchAllBreeds = sandbox.spy();
-        mockFetchRandomBreedImage = sandbox.spy();
+        mockFetchCurrentBreedImages = sandbox.spy();
         component = renderComponent();
     })
 
@@ -64,6 +70,16 @@ describe('Given `DogShow`', () => {
 
             beforeEach(() => {
                 component = renderComponent({ currentBreed: ['akita'] });
+            })
+
+            it('should dispatch fetchCurrentBreedImages()', () => {
+
+                sinon.assert.notCalled(mockFetchCurrentBreedImages);
+                
+                component.setProps({ currentBreed: ['beagle'] });     
+
+                sinon.assert.calledOnce(mockFetchCurrentBreedImages);
+
             })
 
             it('should contain a `.dog-gallery-container`', () => {
