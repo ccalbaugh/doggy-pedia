@@ -28,9 +28,9 @@ describe('Given `DogApp`', () => {
 
     });
 
-    it('should contain a `DogSearchForm', () => {
+    it('should contain a `Connected DogSearchForm', () => {
 
-        expect(component.find('DogSearchForm').exists()).to.be.true()
+        expect(component.find('Connect(DogSearchForm)').exists()).to.be.true()
 
     });
 
