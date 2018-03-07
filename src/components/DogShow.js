@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchAllBreeds } from '../actions';
 import DogGallery from './DogGallery';
-import BreedChoice from './BreedChoice';
 
 export class DogShow extends Component {
-    
+
     componentDidMount() {
         this.props.fetchAllBreeds();
     }
@@ -26,13 +25,13 @@ export class DogShow extends Component {
                                 <button className="next-button">Next</button>   
                             </div>
                         ) : (
-                            <div className="breed-choice-container">
+                            <ul className="breed-choice-list">
                                 {
                                     currentBreed.map((breed, i) => {
-                                        return <BreedChoice key={i} />;
+                                        return <li className="breed-choice-list-item" key={i}>{breed}</li>;
                                     })
                                 }
-                            </div>
+                            </ul>
                         )
                     )
                 }     
