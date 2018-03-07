@@ -15,3 +15,12 @@ export function fetchAllBreeds() {
         .then(breeds => dispatch({ type: types.FETCH_ALL_BREEDS, breeds }))
     };
 }
+
+export function fetchCurrentBreedImages(breed) {
+    return dispatch => {
+        return fetch(`https://dog.ceo/api/breed/${breed}/images`)
+        .then(res => res.json())
+        .then(data => data.message)
+        .then(images => dispatch({ type: types.FETCH_CURRENT_BREED_IMAGES, images }))
+    };
+}
