@@ -2,28 +2,33 @@ import React from 'react'
 import { expect } from 'code'
 import { shallow } from 'enzyme'
 import sinon from 'sinon'
-import { DogShow } from './DogShow'
+import ConnectedDogShow, { DogShow } from './DogShow'
 
 describe('Given `DogShow`', () => {
 
     let component,
         sandbox,
-        mockFetchAllBreeds;
+        mockFetchAllBreeds,
+        mockFetchRandomBreedImage;
 
     function requiredProps(overrides = {}) {
         return {
+            fetchAllBreeds: mockFetchAllBreeds, 
+            fetchRandomBreedImage: mockFetchRandomBreedImage,
             ...overrides
         };
     }
 
-    function renderComponent(props = requiredProps()) {
-        return shallow(<DogShow {...props} />);
+    function renderComponent(props = {}) {
+        const newProps = requiredProps(props);
+        return shallow(<DogShow {...newProps} />);
     }
 
     beforeEach(() => {
         sandbox = sinon.createSandbox();
         mockFetchAllBreeds = sandbox.spy();
-        component = renderComponent({ fetchAllBreeds: mockFetchAllBreeds });
+        mockFetchRandomBreedImage = sandbox.spy();
+        component = renderComponent();
     })
 
     afterEach(() => {
@@ -36,19 +41,66 @@ describe('Given `DogShow`', () => {
 
     });
 
-    it('should contain a `.previous-button`, a `DogGallery`, and a `.next-button`', () => {
-
-        expect(component.find('.previous-button').type()).to.equal('button');
-        expect(component.find('.next-button').type()).to.equal('button');
-        expect(component.find('DogGallery').exists()).to.be.true();
-        
-    });
-
     describe('When the component mounts', () => {
 
         it('should dispatch fetchAllBreeds()', () => {
 
             sinon.assert.calledOnce(mockFetchAllBreeds);
+
+        });
+
+        describe('When `currentBreed` contains no breeds', () => {
+
+
+            it('should show a `span` with a specific class name', () => {
+
+                expect(component.find('.no-breeds-text').type()).to.equal('span');
+
+            });
+
+        });
+
+        describe('When `currentBreed` contains exactly one breed', () => {
+
+            beforeEach(() => {
+                component = renderComponent({ currentBreed: ['akita'] });
+            })
+
+            it('should contain a `.dog-gallery-container`', () => {
+
+                expect(component.find('.dog-gallery-container').type()).to.equal('div');
+
+            })
+
+            describe('Given `.dog-gallery-container`', () => {
+
+                it('should contain a `.previous-button`, a `DogGallery`, and a `.next-button`', () => {
+
+                    const dogGalleryContainer = component.find('.dog-gallery-container');
+
+                    expect(dogGalleryContainer.find('.previous-button').type()).to.equal('button');
+                    expect(dogGalleryContainer.find('.next-button').type()).to.equal('button');
+                    expect(dogGalleryContainer.find('DogGallery').exists()).to.be.true();
+                    
+                });
+
+            });
+
+        });
+
+        describe('When `currentBreed` contains more than one breed', () => {
+
+            const currentMockBreeds = ['affenpinscher', 'african'];
+
+            beforeEach(() => {
+                component = renderComponent({ currentBreed: currentMockBreeds })
+            })
+
+            it('should return a `BreedChoice` for each breed in `currentBreed`', () => {
+
+                expect(component.find('BreedChoice').length).to.equal(currentMockBreeds.length);
+
+            });
 
         });
 
