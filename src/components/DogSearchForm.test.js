@@ -35,10 +35,31 @@ describe('Given `DogSearchForm`', () => {
         
     })
 
-    it('should contain state with a currentInput', () => {
+    describe('When the `input` has no value', () => {
 
-        expect(component.state()).to.equal({ currentInput: '' })
+        it('should contain state with a currentInput', () => {
 
-    })
+            expect(component.state()).to.equal({ currentInput: '' })
+    
+        });
+
+    });
+
+    describe('When the `input` has a value', () => {
+
+        let mockValue;
+
+        beforeEach(() => {
+            mockValue = 'akita';
+            component.find('.dog-search-input').simulate('change', { target: { value: mockValue } } );
+        })
+
+        it('should reflect that change in the state', () => {
+
+            expect(component.state()).to.equal({ currentInput: 'akita' });
+
+        });
+
+    });
 
 });
