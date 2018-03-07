@@ -6,12 +6,26 @@ import configureMockStore from 'redux-mock-store';
 import * as actions from './index';
 import * as types from './actionTypes';
 
-const createMockStore = configureMockStore([ thunk ]);
-const store = createMockStore({ allBreeds: {} });
-const mockResponse = { message: [ "affenpinscher", "african", "airedale", "akita" ] };
-const json = sinon.stub().returns(mockResponse);
-const fetchStub = sinon.stub(global, 'fetch').resolves({ json });
+let mockResponse,
+    expectedMessage,
+    sandbox,
+    json,
+    fetchStub;
 
+const createMockStore = configureMockStore([ thunk ]);
+const store = createMockStore({}); 
+
+beforeEach(() => {
+    sandbox = sinon.createSandbox();
+    mockResponse = { message: expectedMessage };
+    json = sandbox.stub().returns(mockResponse);
+    fetchStub = sandbox.stub(global, 'fetch').resolves({ json });
+})
+
+afterEach(() => {
+    sandbox.restore();
+    store.clearActions();
+})
 
 it('creates an action to search for a breed', () => {
 
@@ -25,6 +39,8 @@ it('creates an action to search for a breed', () => {
 
 it('creates an async action to fetch all breeds', () => {
 
+    const expectedMessage = [ "affenpinscher", "african", "airedale", "akita" ];
+
     const expectedActions = [{ type: types.FETCH_ALL_BREEDS, breeds: mockResponse.message }];
 
     return store.dispatch(actions.fetchAllBreeds())
@@ -36,3 +52,25 @@ it('creates an async action to fetch all breeds', () => {
     });
 
 });
+
+it('creates an async action to fetch all `currentBreed` images', () => {
+
+    const expectedMessage = [ 
+        "https://dog.ceo/api/img/akita/512px-Ainu-Dog.jpg",
+        "https://dog.ceo/api/img/akita/Akita_Dog.jpg",
+        "https://dog.ceo/api/img/akita/Akita_Inu_dog.jpg" 
+    ];  
+
+    const expectedActions = [{ type: types.FETCH_CURRENT_BREED_IMAGES, images: mockResponse.message }];
+
+    const mockBreed = 'akita';
+
+    return store.dispatch(actions.fetchCurrentBreedImages(mockBreed))
+
+    .then(() => {
+
+        expect(store.getActions()).to.equal(expectedActions);
+
+    });
+
+})
