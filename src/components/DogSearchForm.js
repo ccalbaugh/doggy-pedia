@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { searchBreed } from '../actions';
 
@@ -35,6 +36,10 @@ export class DogSearchForm extends Component {
             </form>
         );
     }
+}
+
+DogSearchForm.propTypes = {
+    searchBreed: PropTypes.func
 }
 
 export default connect(null, { searchBreed })(DogSearchForm);
