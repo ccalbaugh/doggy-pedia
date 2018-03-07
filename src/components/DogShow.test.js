@@ -98,7 +98,7 @@ describe('Given `DogShow`', () => {
 
             it('should return a `BreedChoice` for each breed in `currentBreed`', () => {
 
-                expect(component.find('BreedChoice').length).to.equal(currentMockBreeds.length);
+                expect(component.find('li').length).to.equal(currentMockBreeds.length);
 
             });
 
