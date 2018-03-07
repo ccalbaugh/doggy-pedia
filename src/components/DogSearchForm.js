@@ -23,7 +23,8 @@ export class DogSearchForm extends Component {
                 <input 
                     type="text" 
                     className="dog-search-input"
-                    onChange={ (e) => this.setState({ currentInput: e.target.value }) } 
+                    onChange={ (e) => this.setState({ currentInput: e.target.value }) }
+                    value={this.state.currentInput} 
                 />
                 <button 
                     type="submit" 
