@@ -2,11 +2,12 @@ import React from 'react'
 import { expect } from 'code'
 import { shallow } from 'enzyme'
 import sinon from 'sinon'
-import DogSearchForm from './DogSearchForm'
+import { DogSearchForm } from './DogSearchForm'
 
 describe('Given `DogSearchForm`', () => {
 
-    let component
+    let component,
+        action;
 
     function requiredProps(overrides = {}) {
         return {
@@ -19,7 +20,8 @@ describe('Given `DogSearchForm`', () => {
     }
 
     beforeEach(() => {
-        component = renderComponent();
+        action = sinon.spy();
+        component = renderComponent({ searchBreed: action });
     })
 
     it('should exist as a `form` with a specific class name', () => {
@@ -57,6 +59,28 @@ describe('Given `DogSearchForm`', () => {
         it('should reflect that change in the state', () => {
 
             expect(component.state()).to.equal({ currentInput: 'akita' });
+
+        });
+
+        describe('When the `form` is submitted', () => {
+
+            beforeEach(() => {
+                component.find('.dog-search-form').simulate('submit', {
+                    preventDefault: () => {}
+                });
+            })
+
+            it('should call an action', () => {
+
+                sinon.assert.calledOnce(action);
+
+            });
+
+            it('should clear the `currentInput`', () => {
+
+                expect(component.state()).to.equal({ currentInput: '' });
+
+            });
 
         });
 
