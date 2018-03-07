@@ -9,8 +9,17 @@ class DogSearchForm extends Component {
     render() {
         return (
             <form className="dog-search-form">
-                <input type="text" className="dog-search-input" />
-                <button type="submit" className="dog-search-button">Search</button>
+                <input 
+                    type="text" 
+                    className="dog-search-input"
+                    onChange={ (e) => this.setState({ currentInput: e.target.value }) } 
+                />
+                <button 
+                    type="submit" 
+                    className="dog-search-button"
+                >
+                    Search
+                </button>
             </form>
         );
     }
