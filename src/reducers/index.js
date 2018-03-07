@@ -15,10 +15,18 @@ function searchBreed(state, action) {
     };
 }
 
+function fetchCurrentBreedImages(state, action) {
+    return {
+        ...state,
+        currentBreedImages: action.images
+    };
+}
+
 export default function(state = {}, action) {
     const actionsHandler = {
         [types.FETCH_ALL_BREEDS]: fetchAllBreeds,
-        [types.SEARCH_BREED]: searchBreed
+        [types.SEARCH_BREED]: searchBreed,
+        [types.FETCH_CURRENT_BREED_IMAGES]: fetchCurrentBreedImages
     };
 
     const reducer = actionsHandler[action.type];
