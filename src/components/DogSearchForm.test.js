@@ -37,51 +37,67 @@ describe('Given `DogSearchForm`', () => {
         
     })
 
-    describe('When the `input` has no value', () => {
+    describe('Given `input`', () => {
 
-        it('should contain state with a currentInput', () => {
+        describe('When the `input` has no value', () => {
 
-            expect(component.state()).to.equal({ currentInput: '' })
+            it('should contain state with a currentInput', () => {
+    
+                expect(component.state()).to.equal({ currentInput: '' })
+        
+            });
+
+            it('should use `currentInput` in the state as it\'s value', () => {
+
+                expect(component.find('.dog-search-input').props().value).to.equal('');
+
+            });
     
         });
-
-    });
-
-    describe('When the `input` has a value', () => {
-
-        let mockValue;
-
-        beforeEach(() => {
-            mockValue = 'akita';
-            component.find('.dog-search-input').simulate('change', { target: { value: mockValue } } );
-        })
-
-        it('should reflect that change in the state', () => {
-
-            expect(component.state()).to.equal({ currentInput: 'akita' });
-
-        });
-
-        describe('When the `form` is submitted', () => {
-
+    
+        describe('When the `input` has a value', () => {
+    
+            let mockValue;
+    
             beforeEach(() => {
-                component.find('.dog-search-form').simulate('submit', {
-                    preventDefault: () => {}
-                });
+                mockValue = 'akita';
+                component.find('.dog-search-input').simulate('change', { target: { value: mockValue } } );
             })
-
-            it('should call an action', () => {
-
-                sinon.assert.calledOnce(action);
-
+    
+            it('should reflect that change in the state', () => {
+    
+                expect(component.state()).to.equal({ currentInput: 'akita' });
+    
             });
 
-            it('should clear the `currentInput`', () => {
+            it('should use `currentInput` in the state as it\'s value', () => {
 
-                expect(component.state()).to.equal({ currentInput: '' });
+                expect(component.find('.dog-search-input').props().value).to.equal(mockValue);
 
             });
-
+    
+            describe('When the `form` is submitted', () => {
+    
+                beforeEach(() => {
+                    component.find('.dog-search-form').simulate('submit', {
+                        preventDefault: () => {}
+                    });
+                })
+    
+                it('should call an action', () => {
+    
+                    sinon.assert.calledOnce(action);
+    
+                });
+    
+                it('should clear the `currentInput`', () => {
+    
+                    expect(component.state()).to.equal({ currentInput: '' });
+    
+                });
+    
+            });
+    
         });
 
     });
