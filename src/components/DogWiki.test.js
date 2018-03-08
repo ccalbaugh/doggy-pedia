@@ -6,7 +6,7 @@ import DogWiki from './DogWiki'
 
 describe('Given `DogWiki`', () => {
 
-    let component
+    let component;
 
     function requiredProps(overrides = {}) {
         return {
@@ -26,6 +26,18 @@ describe('Given `DogWiki`', () => {
     it('should exist as a `section` with a specific class name', () => {
 
         expect(component.find('.dog-wiki').type()).to.equal('section');
+
+    });
+
+    it('contains an `DraftEditor`', () => {
+
+        expect(component.find('DraftEditor').exists()).to.be.true();
+
+    });
+
+    it('has an intitial `editorState`', () => {
+
+        expect(component.state().editorState).to.exist();
 
     });
 
