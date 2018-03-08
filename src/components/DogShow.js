@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { fetchAllBreeds, fetchCurrentBreedImages } from '../actions';
 import DogGallery from './DogGallery';
 
+
+
 export class DogShow extends Component {
 
     state = {
@@ -16,12 +18,16 @@ export class DogShow extends Component {
 
     componentWillReceiveProps(nextProps) {
         nextProps.currentBreed !== this.props.currentBreed && 
-        nextProps.currentBreed.length === 1 &&
-        this.props.fetchCurrentBreedImages(nextProps.currentBreed); 
         this.setState({ currentBreedImages: [] });
 
         nextProps.currentBreedImages !== this.props.currentBreedImages &&
         this.setState({ currentBreedImages: nextProps.currentBreedImages })
+    }
+
+    componentDidUpdate(prevProps) {
+        prevProps.currentBreed !== this.props.currentBreed && 
+        this.props.currentBreed.length === 1 &&
+        this.props.fetchCurrentBreedImages(this.props.currentBreed); 
     }
 
     render() {
