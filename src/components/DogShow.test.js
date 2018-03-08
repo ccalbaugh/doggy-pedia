@@ -21,10 +21,15 @@ describe('Given `DogShow`', () => {
         "https://dog.ceo/api/img/akita/512px-Akita_inu.jpeg"
     ];
 
+    const newBreedImages = [
+        "https://dog.ceo/api/img/akita/512px-Ainu-Dog.jpg",
+        "https://dog.ceo/api/img/akita/Akita_Dog.jpg"
+    ];
+
     const initialState = {
         currentBreedImages: [],
-        imagesToPass: [],
-        currentIndex: 0
+        currentIndex: 0,
+        currentInterval: undefined
     };
 
     function requiredProps(overrides = {}) {
@@ -72,12 +77,6 @@ describe('Given `DogShow`', () => {
 
         });
 
-        it('should contain state with `imagesToPass` set to an empty array', () => {
-
-            expect(component.state().imagesToPass).to.equal([]);
-
-        });
-
         it('should contain state with `currentIndex` set to 0', () => {
 
             expect(component.state().currentIndex).to.equal(0);
@@ -113,6 +112,57 @@ describe('Given `DogShow`', () => {
                 expect(component.state().currentIndex).to.equal(0);
 
             });
+
+            describe('When the component will receive new `currentBreedImages`', () => {
+
+                let clock;
+
+                beforeEach(() => {
+                    component.setProps({ currentBreedImages: newBreedImages })
+                    clock = sinon.useFakeTimers({
+                        shouldAdvanceTime: true
+                    });
+                })
+
+                afterEach(() => {
+                    clock.restore();
+                })
+
+                it('should set the `newBreedImages` in the state', () => {
+
+                    expect(component.state().currentBreedImages).to.equal(newBreedImages);
+
+                });
+
+                it('should create a timer that calls a function every 10 seconds', () => {
+
+                    component.setProps({ currentBreedImages: mockBreedImages });
+
+                    expect(clock.now).to.equal(0);
+
+                    clock.next();
+
+                    expect(clock.now).to.equal(10000);
+
+                });
+
+                describe('When the timer fires', () => {
+
+                    it('should update the `currentIndex` in the state', () => {
+
+                        component.setProps({ currentBreedImages: mockBreedImages });
+    
+                        expect(component.state().currentIndex).to.equal(0);
+    
+                        clock.next();
+                    
+                        expect(component.state().currentIndex).to.equal(3);
+
+                    });
+
+                })
+
+            })
 
         });
 
