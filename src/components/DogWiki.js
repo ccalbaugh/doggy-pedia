@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { Editor, EditorState } from 'draft-js';
 
-function DogWiki() {
-    return (
-        <section className="dog-wiki">
+class DogWiki extends Component {
 
-        </section>
-    );
+    state = {
+        editorState: EditorState.createEmpty()
+    };
+
+    render() {
+        return (
+            <section className="dog-wiki">
+                <Editor />
+            </section>
+        );
+    }
 }
 
 export default DogWiki;
