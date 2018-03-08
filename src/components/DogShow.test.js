@@ -32,6 +32,8 @@ describe('Given `DogShow`', () => {
         currentInterval: undefined
     };
 
+    const mockIndex = 5;
+
     function requiredProps(overrides = {}) {
         return {
             fetchAllBreeds: mockFetchAllBreeds, 
@@ -85,8 +87,17 @@ describe('Given `DogShow`', () => {
 
         describe('When the currentBreed changes', () => {
 
+            let clock;
+
             beforeEach(() => {
                 component = renderComponent({ currentBreed: ['akita'] });
+                clock = sinon.useFakeTimers({
+                    shouldAdvanceTime: true
+                });
+            })
+
+            afterEach(() => {
+                clock.restore();
             })
 
             it('should set `currentBreedImages` back to an empty array', () => {
@@ -103,29 +114,20 @@ describe('Given `DogShow`', () => {
 
             it('should set `currentIndex` back to 0', () => {
 
-                component.setState({ currentIndex: 5 });
+                component.setState({ currentIndex: mockIndex });
 
-                expect(component.state().currentIndex).to.equal(5);
+                expect(component.state().currentIndex).to.equal(mockIndex);
 
-                component.setProps({ currentBreed: ['beagle'] })
+                component.setProps({ currentBreed: ['beagle'] });
 
                 expect(component.state().currentIndex).to.equal(0);
 
             });
 
             describe('When the component will receive new `currentBreedImages`', () => {
-
-                let clock;
-
+                
                 beforeEach(() => {
                     component.setProps({ currentBreedImages: newBreedImages })
-                    clock = sinon.useFakeTimers({
-                        shouldAdvanceTime: true
-                    });
-                })
-
-                afterEach(() => {
-                    clock.restore();
                 })
 
                 it('should set the `newBreedImages` in the state', () => {
@@ -146,7 +148,7 @@ describe('Given `DogShow`', () => {
 
                 });
 
-                describe('When the timer fires', () => {
+                describe('When the timer is triggered', () => {
 
                     it('should update the `currentIndex` in the state', () => {
 
@@ -160,9 +162,25 @@ describe('Given `DogShow`', () => {
 
                     });
 
-                })
+                });
 
-            })
+                describe('When the currentBreed changes', () => {
+
+                    it('should clear the timer', () => {
+
+                        expect(component.state().currentInterval).not.to.be.undefined();                         
+
+                        component.setProps({ currentBreedImages: mockBreedImages });
+        
+                        component.setProps({ currentBreed: ['beagle'] });
+
+                        expect(component.state().currentInterval).to.be.undefined();                                               
+        
+                    });
+
+                });
+
+            });
 
         });
 
@@ -255,7 +273,7 @@ describe('Given `DogShow`', () => {
                 describe('When the `currentIndex` is not 0 and is within 3 of the length of `currentBreedImages`', () => {
 
                     beforeEach(() => {
-                        component.setState({ currentIndex: 5, currentBreedImages: mockBreedImages });
+                        component.setState({ currentIndex: mockIndex, currentBreedImages: mockBreedImages });
                     })
 
                     it('should enable the `.previous-button`', () => {
