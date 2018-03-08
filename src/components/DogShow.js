@@ -9,6 +9,7 @@ export class DogShow extends Component {
 
     state = {
         currentBreedImages: [],
+        imagesToPass: [],
         currentIndex: 0
     };
 
@@ -33,6 +34,9 @@ export class DogShow extends Component {
 
     render() {
         const { currentBreed } = this.props;
+        const { currentBreedImages, currentIndex, imagesToPass } = this.state;
+        const prevDisabled = currentIndex === 0 || currentBreedImages.length <= 3;
+        const nextDisabled = currentIndex >= (currentBreedImages.length - 2);     
         return (
             <section className="dog-show">
                 {
@@ -41,9 +45,9 @@ export class DogShow extends Component {
                     ) : (
                         currentBreed.length === 1 ? (
                             <div className='dog-gallery-container'>
-                                <button className="previous-button">Prev</button>
-                                <DogGallery breedImages={this.state.currentBreedImages} />
-                                <button className="next-button">Next</button>   
+                                <button className="previous-button" disabled={prevDisabled}>Prev</button>
+                                <DogGallery breedImages={imagesToPass} />
+                                <button className="next-button" disabled={nextDisabled}>Next</button>   
                             </div>
                         ) : (
                             <ul className="breed-choice-list">
