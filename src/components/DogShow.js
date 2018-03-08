@@ -5,9 +5,11 @@ import { fetchAllBreeds, fetchCurrentBreedImages } from '../actions';
 import DogGallery from './DogGallery';
 
 const GALLERY_SIZE = 3;
+const CYCLE_DELAY = 10000;
 
 function updateCurrentIndex() {
     const { currentIndex, currentBreedImages } = this.state;
+    console.log('updated Index');
 
     currentIndex + GALLERY_SIZE <= currentBreedImages.length - 1 ?
         this.setState({ currentIndex: currentIndex + GALLERY_SIZE }) :
@@ -33,7 +35,7 @@ export class DogShow extends Component {
         }
         
         if (nextProps.currentBreedImages !== this.props.currentBreedImages) {
-            const currentInterval = setInterval(updateCurrentIndex.bind(this), 10000);
+            const currentInterval = setInterval(updateCurrentIndex.bind(this), CYCLE_DELAY);
             this.setState({ currentBreedImages: nextProps.currentBreedImages, currentInterval });
         }
     }
@@ -51,9 +53,9 @@ export class DogShow extends Component {
         const { currentBreedImages, currentIndex } = this.state;
         const prevDisabled = currentIndex === 0 || currentBreedImages.length <= GALLERY_SIZE;
         const nextDisabled = currentIndex >= (currentBreedImages.length - GALLERY_SIZE);
-        const imagesToPass = currentIndex + GALLERY_SIZE <= currentBreedImages.length - 1 ? 
-                                currentBreedImages.slice(currentIndex, GALLERY_SIZE) :
-                                currentBreedImages.slice(currentIndex);
+        const imagesForGallery = currentIndex + GALLERY_SIZE <= currentBreedImages.length - 1 ? 
+                                    currentBreedImages.slice(currentIndex, currentIndex + GALLERY_SIZE) :
+                                    currentBreedImages.slice(currentIndex);
         return (
             <section className="dog-show">
                 {
@@ -63,7 +65,7 @@ export class DogShow extends Component {
                         currentBreed.length === 1 ? (
                             <div className='dog-gallery-container'>
                                 <button className="previous-button" disabled={prevDisabled}>Prev</button>
-                                <DogGallery breedImages={imagesToPass} />
+                                <DogGallery breedImages={imagesForGallery} />
                                 <button className="next-button" disabled={nextDisabled}>Next</button>   
                             </div>
                         ) : (
