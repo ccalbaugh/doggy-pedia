@@ -55,6 +55,18 @@ describe('Given `DogShow`', () => {
 
         });
 
+        it('should contain state with `currentBreedImages` set to an empty array', () => {
+
+            expect(component.state().currentBreedImages).to.equal([]);
+
+        });
+
+        it('should contain state with `currentIndex` set to 0', () => {
+
+            expect(component.state().currentIndex).to.equal(0);
+
+        });
+
         describe('When the currentBreed changes', () => {
 
             it('should set `currentBreedImages` back to an empty array', () => {
