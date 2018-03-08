@@ -14,8 +14,18 @@ describe('Given `DogShow`', () => {
     const mockBreedImages = [
         "https://dog.ceo/api/img/akita/512px-Ainu-Dog.jpg",
         "https://dog.ceo/api/img/akita/Akita_Dog.jpg",
-        "https://dog.ceo/api/img/akita/Akita_Inu_dog.jpg"
+        "https://dog.ceo/api/img/akita/Akita_Inu_dog.jpg",
+        "https://dog.ceo/api/img/akita/Akita_inu_blanc.jpg",
+        "https://dog.ceo/api/img/akita/An_Akita_Inu_resting.jpg",
+        "https://dog.ceo/api/img/akita/Japaneseakita.jpg",
+        "https://dog.ceo/api/img/akita/512px-Akita_inu.jpeg"
     ];
+
+    const initialState = {
+        currentBreedImages: [],
+        imagesToPass: [],
+        currentIndex: 0
+    };
 
     function requiredProps(overrides = {}) {
         return {
@@ -35,6 +45,7 @@ describe('Given `DogShow`', () => {
         mockFetchAllBreeds = sandbox.spy();
         mockFetchCurrentBreedImages = sandbox.spy();
         component = renderComponent();
+        component.setState(initialState)
     })
 
     afterEach(() => {
@@ -58,6 +69,12 @@ describe('Given `DogShow`', () => {
         it('should contain state with `currentBreedImages` set to an empty array', () => {
 
             expect(component.state().currentBreedImages).to.equal([]);
+
+        });
+
+        it('should contain state with `imagesToPass` set to an empty array', () => {
+
+            expect(component.state().imagesToPass).to.equal([]);
 
         });
 
@@ -118,7 +135,7 @@ describe('Given `DogShow`', () => {
 
             });
 
-            describe('Given `.dog-gallery-container`', () => {
+            describe('Given `.dog-gallery-container`', () => {   
 
                 it('should contain a `.previous-button`, a `DogGallery`, and a `.next-button`', () => {
 
@@ -128,6 +145,71 @@ describe('Given `DogShow`', () => {
                     expect(dogGalleryContainer.find('.next-button').type()).to.equal('button');
                     expect(dogGalleryContainer.find('DogGallery').exists()).to.be.true();
                     
+                });
+
+                describe('When the `currentIndex` is 0', () => {
+
+                    describe('And the `currentIndex` is not within 3 of the length of currentBreedImages', () => {
+
+                        beforeEach(() => {
+                            component.setState({ currentIndex: 0, currentBreedImages: mockBreedImages });
+                        })
+
+                        it('should disable the `.previous-button`', () => {
+
+                            const dogGalleryContainer = component.find('.dog-gallery-container');
+
+                            expect(dogGalleryContainer.find('.previous-button').props().disabled).to.be.true();                    
+        
+                        });
+    
+                        it('should enable the `.next-button`', () => {
+
+                            const dogGalleryContainer = component.find('.dog-gallery-container');                                                
+    
+                            expect(dogGalleryContainer.find('.next-button').props().disabled).to.be.false();                    
+        
+                        });
+
+                    });
+
+                    describe('And the `currentIndex` is within 3 of the length of currentBreedImages', () => {
+
+                        it('should disable the `.previous-button` and the `.next-button`', () => {
+
+                            const dogGalleryContainer = component.find('.dog-gallery-container');
+
+                            expect(dogGalleryContainer.find('.previous-button').props().disabled).to.be.true();                    
+                            expect(dogGalleryContainer.find('.next-button').props().disabled).to.be.true();                    
+        
+                        });
+
+                    });
+
+                });
+
+                describe('When the `currentIndex` is not 0 and is within 3 of the length of `currentBreedImages`', () => {
+
+                    beforeEach(() => {
+                        component.setState({ currentIndex: 5, currentBreedImages: mockBreedImages });
+                    })
+
+                    it('should enable the `.previous-button`', () => {
+
+                        const dogGalleryContainer = component.find('.dog-gallery-container');
+    
+                        expect(dogGalleryContainer.find('.previous-button').props().disabled).to.be.false();                    
+    
+                    });
+
+                    it('should disable the `.next-button`', () => {
+
+                        const dogGalleryContainer = component.find('.dog-gallery-container');                        
+    
+                        expect(dogGalleryContainer.find('.next-button').props().disabled).to.be.true();                    
+    
+                    });
+
                 });
 
             });
