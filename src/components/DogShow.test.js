@@ -55,6 +55,24 @@ describe('Given `DogShow`', () => {
 
         });
 
+        describe('When the currentBreed changes', () => {
+
+            it('should set `currentBreedImages` back to an empty array', () => {
+
+                component = renderComponent({ currentBreed: ['akita'] });
+
+                component.setState({ currentBreedImages: mockBreedImages });
+
+                expect(component.state().currentBreedImages).to.equal(mockBreedImages);
+
+                component.setProps({ currentBreed: ['beagle'] })
+
+                expect(component.state().currentBreedImages).to.equal([]);
+
+            })
+
+        })
+
         describe('When `currentBreed` contains no breeds', () => {
 
 
@@ -80,13 +98,13 @@ describe('Given `DogShow`', () => {
 
                 sinon.assert.calledOnce(mockFetchCurrentBreedImages);
 
-            })
+            });
 
             it('should contain a `.dog-gallery-container`', () => {
 
                 expect(component.find('.dog-gallery-container').type()).to.equal('div');
 
-            })
+            });
 
             describe('Given `.dog-gallery-container`', () => {
 
