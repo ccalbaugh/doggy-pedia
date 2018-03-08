@@ -86,9 +86,11 @@ describe('Given `DogShow`', () => {
 
         describe('When the currentBreed changes', () => {
 
-            it('should set `currentBreedImages` back to an empty array', () => {
-
+            beforeEach(() => {
                 component = renderComponent({ currentBreed: ['akita'] });
+            })
+
+            it('should set `currentBreedImages` back to an empty array', () => {
 
                 component.setState({ currentBreedImages: mockBreedImages });
 
@@ -98,9 +100,21 @@ describe('Given `DogShow`', () => {
 
                 expect(component.state().currentBreedImages).to.equal([]);
 
-            })
+            });
 
-        })
+            it('should set `currentIndex` back to 0', () => {
+
+                component.setState({ currentIndex: 5 });
+
+                expect(component.state().currentIndex).to.equal(5);
+
+                component.setProps({ currentBreed: ['beagle'] })
+
+                expect(component.state().currentIndex).to.equal(0);
+
+            });
+
+        });
 
         describe('When `currentBreed` contains no breeds', () => {
 
