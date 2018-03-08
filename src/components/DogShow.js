@@ -5,11 +5,11 @@ import { fetchAllBreeds, fetchCurrentBreedImages } from '../actions';
 import DogGallery from './DogGallery';
 
 
-
 export class DogShow extends Component {
 
     state = {
-        currentBreedImages: []
+        currentBreedImages: [],
+        currentIndex: 0
     };
 
     componentDidMount() {
@@ -21,13 +21,14 @@ export class DogShow extends Component {
         this.setState({ currentBreedImages: [] });
 
         nextProps.currentBreedImages !== this.props.currentBreedImages &&
-        this.setState({ currentBreedImages: nextProps.currentBreedImages })
+        this.setState({ currentBreedImages: nextProps.currentBreedImages });
     }
 
     componentDidUpdate(prevProps) {
-        prevProps.currentBreed !== this.props.currentBreed && 
-        this.props.currentBreed.length === 1 &&
-        this.props.fetchCurrentBreedImages(this.props.currentBreed); 
+        const { currentBreed, fetchCurrentBreedImages } = this.props;
+        prevProps.currentBreed !== currentBreed && 
+        currentBreed.length === 1 &&
+        fetchCurrentBreedImages(currentBreed);
     }
 
     render() {
