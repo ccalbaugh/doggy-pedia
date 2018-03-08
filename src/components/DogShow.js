@@ -19,7 +19,7 @@ export class DogShow extends Component {
 
     componentWillReceiveProps(nextProps) {
         nextProps.currentBreed !== this.props.currentBreed && 
-        this.setState({ currentBreedImages: [] });
+        this.setState({ currentBreedImages: [], currentIndex: 0 });
 
         nextProps.currentBreedImages !== this.props.currentBreedImages &&
         this.setState({ currentBreedImages: nextProps.currentBreedImages });
