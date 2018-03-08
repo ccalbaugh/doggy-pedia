@@ -4,13 +4,22 @@ import PropTypes from 'prop-types';
 import { fetchAllBreeds, fetchCurrentBreedImages } from '../actions';
 import DogGallery from './DogGallery';
 
+const GALLERY_SIZE = 3;
+
+function updateCurrentIndex() {
+    const { currentIndex, currentBreedImages } = this.state;
+
+    currentIndex + GALLERY_SIZE <= currentBreedImages.length - 1 ?
+        this.setState({ currentIndex: currentIndex + GALLERY_SIZE }) :
+        this.setState({ currentIndex: 0 });
+}
 
 export class DogShow extends Component {
 
     state = {
         currentBreedImages: [],
-        imagesToPass: [],
-        currentIndex: 0
+        currentIndex: 0,
+        currentInterval: undefined
     };
 
     componentDidMount() {
@@ -21,12 +30,15 @@ export class DogShow extends Component {
         nextProps.currentBreed !== this.props.currentBreed && 
         this.setState({ currentBreedImages: [], currentIndex: 0 });
 
-        nextProps.currentBreedImages !== this.props.currentBreedImages &&
-        this.setState({ currentBreedImages: nextProps.currentBreedImages });
+        if (nextProps.currentBreedImages !== this.props.currentBreedImages) {
+            const currentInterval = setInterval(updateCurrentIndex.bind(this), 10000);
+            this.setState({ currentBreedImages: nextProps.currentBreedImages, currentInterval });
+        }
     }
 
     componentDidUpdate(prevProps) {
         const { currentBreed, fetchCurrentBreedImages } = this.props;
+
         prevProps.currentBreed !== currentBreed && 
         currentBreed.length === 1 &&
         fetchCurrentBreedImages(currentBreed);
@@ -34,9 +46,12 @@ export class DogShow extends Component {
 
     render() {
         const { currentBreed } = this.props;
-        const { currentBreedImages, currentIndex, imagesToPass } = this.state;
-        const prevDisabled = currentIndex === 0 || currentBreedImages.length <= 3;
-        const nextDisabled = currentIndex >= (currentBreedImages.length - 2);     
+        const { currentBreedImages, currentIndex } = this.state;
+        const prevDisabled = currentIndex === 0 || currentBreedImages.length <= GALLERY_SIZE;
+        const nextDisabled = currentIndex >= (currentBreedImages.length - GALLERY_SIZE);
+        const imagesToPass = currentIndex + GALLERY_SIZE <= currentBreedImages.length - 1 ? 
+                                currentBreedImages.slice(currentIndex, GALLERY_SIZE) :
+                                currentBreedImages.slice(currentIndex);
         return (
             <section className="dog-show">
                 {
