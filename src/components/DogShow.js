@@ -16,6 +16,15 @@ function updateCurrentIndex() {
         this.setState({ currentIndex: 0 });
 }
 
+function handleButtonClick(direction) {
+    const { currentIndex } = this.state;
+    if (direction.toLowerCase() === 'previous') {
+        this.setState({ currentIndex: currentIndex - GALLERY_SIZE })
+    } else if (direction.toLowerCase() === 'next') {
+        this.setState({ currentIndex: currentIndex + GALLERY_SIZE })
+    }
+}
+
 export class DogShow extends Component {
 
     state = {
@@ -64,9 +73,19 @@ export class DogShow extends Component {
                     ) : (
                         currentBreed.length === 1 ? (
                             <div className='dog-gallery-container'>
-                                <button className="previous-button" disabled={prevDisabled}>Prev</button>
+                                <button className="previous-button" 
+                                        onClick={handleButtonClick.bind(this, 'previous')}
+                                        disabled={prevDisabled}
+                                >
+                                    Prev
+                                </button>
                                 <DogGallery breedImages={imagesForGallery} />
-                                <button className="next-button" disabled={nextDisabled}>Next</button>   
+                                <button className="next-button" 
+                                        onClick={handleButtonClick.bind(this, 'next')}
+                                        disabled={nextDisabled}
+                                >
+                                    Next
+                                </button>   
                             </div>
                         ) : (
                             <ul className="breed-choice-list">
