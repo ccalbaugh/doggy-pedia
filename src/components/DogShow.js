@@ -27,9 +27,11 @@ export class DogShow extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        nextProps.currentBreed !== this.props.currentBreed && 
-        this.setState({ currentBreedImages: [], currentIndex: 0 });
-
+        if (nextProps.currentBreed !== this.props.currentBreed) {
+            clearInterval(this.state.currentInterval);
+            this.setState({ currentBreedImages: [], currentIndex: 0, currentInterval: undefined });
+        }
+        
         if (nextProps.currentBreedImages !== this.props.currentBreedImages) {
             const currentInterval = setInterval(updateCurrentIndex.bind(this), 10000);
             this.setState({ currentBreedImages: nextProps.currentBreedImages, currentInterval });
