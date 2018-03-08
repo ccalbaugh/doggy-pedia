@@ -32,7 +32,8 @@ describe('Given `DogShow`', () => {
         currentInterval: undefined
     };
 
-    const mockIndex = 5;
+    const initialIndex = 0;
+    const mockIndex = 6;
 
     function requiredProps(overrides = {}) {
         return {
@@ -231,7 +232,7 @@ describe('Given `DogShow`', () => {
 
                 describe('When the `currentIndex` is 0', () => {
 
-                    describe('And the `currentIndex` is not within 3 of the length of currentBreedImages', () => {
+                    describe('And the `currentIndex` + `GALLERY_SIZE` is not greater than the length of `currentBreedImages`', () => {
 
                         beforeEach(() => {
                             component.setState({ currentIndex: 0, currentBreedImages: mockBreedImages });
@@ -255,7 +256,7 @@ describe('Given `DogShow`', () => {
 
                     });
 
-                    describe('And the `currentIndex` is within 3 of the length of currentBreedImages', () => {
+                    describe('And the `currentIndex` + `GALLERY_SIZE` is greater than the length of `currentBreedImages`', () => {
 
                         it('should disable the `.previous-button` and the `.next-button`', () => {
 
@@ -270,26 +271,82 @@ describe('Given `DogShow`', () => {
 
                 });
 
-                describe('When the `currentIndex` is not 0 and is within 3 of the length of `currentBreedImages`', () => {
+                describe('When the `currentIndex` is not 0', () => {
 
-                    beforeEach(() => {
-                        component.setState({ currentIndex: mockIndex, currentBreedImages: mockBreedImages });
-                    })
+                    describe('And `currentIndex` + `GALLERY_SIZE` is greater than `currentBreedImages`', () => {
 
-                    it('should enable the `.previous-button`', () => {
-
-                        const dogGalleryContainer = component.find('.dog-gallery-container');
+                        beforeEach(() => {
+                            component.setState({ currentIndex: mockIndex, currentBreedImages: mockBreedImages });
+                        })
     
-                        expect(dogGalleryContainer.find('.previous-button').props().disabled).to.be.false();                    
+                        it('should enable the `.previous-button`', () => {
     
+                            const dogGalleryContainer = component.find('.dog-gallery-container');
+        
+                            expect(dogGalleryContainer.find('.previous-button').props().disabled).to.be.false();                    
+        
+                        });
+    
+                        it('should disable the `.next-button`', () => {
+    
+                            const dogGalleryContainer = component.find('.dog-gallery-container');                        
+        
+                            expect(dogGalleryContainer.find('.next-button').props().disabled).to.be.true();                    
+        
+                        });
+
                     });
 
-                    it('should disable the `.next-button`', () => {
+                    describe('And `currentIndex` + `GALLERY_SIZE` is smaller than `currentBreedImages`', () => {
 
-                        const dogGalleryContainer = component.find('.dog-gallery-container');                        
+                        beforeEach(() => {
+                            component.setState({ currentIndex: 3, currentBreedImages: mockBreedImages });
+                        })
+
+                        it('should enable the `.previous-button`', () => {
     
-                        expect(dogGalleryContainer.find('.next-button').props().disabled).to.be.true();                    
+                            const dogGalleryContainer = component.find('.dog-gallery-container');
+        
+                            expect(dogGalleryContainer.find('.previous-button').props().disabled).to.be.false();                    
+        
+                        });
+
+                        it('should enable the `.next-button`', () => {
     
+                            const dogGalleryContainer = component.find('.dog-gallery-container');
+        
+                            expect(dogGalleryContainer.find('.next-button').props().disabled).to.be.false();                    
+        
+                        });
+
+                        describe('When the `.previous-button` is clicked', () => {
+
+                            it('should appropriately update the `currentIndex`', () => {
+
+                                expect(component.state().currentIndex).to.equal(3);
+
+                                component.find('.previous-button').simulate('click');
+
+                                expect(component.state().currentIndex).to.equal(initialIndex);
+
+                            });
+
+                        });
+
+                        describe('When the `.next-button` is clicked', () => {
+
+                            it('should appropriately update the `currentIndex`', () => {
+
+                                expect(component.state().currentIndex).to.equal(3);
+
+                                component.find('.next-button').simulate('click');
+
+                                expect(component.state().currentIndex).to.equal(mockIndex);
+
+                            });
+
+                        });
+
                     });
 
                 });
