@@ -24,10 +24,15 @@ function focus() {
     this.editor.focus();
 }
 
+function preview() {
+    this.setState({ previewState: this.state.editorState })
+}
+
 class DogWiki extends Component {
 
     state = {
-        editorState: EditorState.createEmpty()
+        editorState: EditorState.createEmpty(),
+        previewState: EditorState.createEmpty()
     };
 
     render() {
@@ -40,13 +45,14 @@ class DogWiki extends Component {
                         plugins={plugins}
                         ref={(element) => { this.editor = element }}
                     />
+                    <button className="preview-button" onClick={preview.bind(this)}>Preview</button>
                     <Toolbar />
                     <EmojiSuggestions />
                     <EmojiSelect />            
                 </div>
                 <div className="editor preview-editor">
                     <Editor
-                        editorState={this.state.editorState}
+                        editorState={this.state.previewState}
                     />
                 </div>
             </section>
