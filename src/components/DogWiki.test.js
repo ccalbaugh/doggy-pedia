@@ -46,6 +46,30 @@ describe('Given `DogWiki`', () => {
             expect(editingEditor.find('PluginEditor').exists()).to.be.true();
     
         });
+
+        it('should contain a `.preview-button`', () => {
+
+            const editingEditor = component.find('.editing-editor');
+
+            expect(editingEditor.find('.preview-button').exists()).to.be.true();
+    
+        });
+
+        describe('When the `.preview-button` is clicked', () => {
+
+            it('should set the `previewState` to the `editorState`', () => {
+
+                component.setState({ editorState: 1, previewState: 0 });
+
+                expect(component.state().editorState).not.to.equal(component.state().previewState);
+
+                component.find('.preview-button').simulate('click');
+
+                expect(component.state().editorState).to.equal(component.state().previewState);
+                
+            });
+
+        });
     
         it('should contain a `Decorated(EmojiSuggestions)` and a `Decorated(EmojiSelect)`', () => {
 
@@ -69,9 +93,10 @@ describe('Given `DogWiki`', () => {
         });
     });
 
-    it('has an intitial `editorState`', () => {
+    it('has an intitial `editorState` and `previewState`', () => {
 
         expect(component.state().editorState).to.exist();
+        expect(component.state().previewState).to.exist();
 
     });
 
