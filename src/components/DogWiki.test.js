@@ -36,6 +36,13 @@ describe('Given `DogWiki`', () => {
 
     });
 
+    it('contains a `Decorated(EmojiSuggestions)` and a `Decorated(EmojiSelect)`', () => {
+
+        expect(component.find('Decorated(EmojiSuggestions)').exists()).to.be.true();
+        expect(component.find('Decorated(EmojiSelect)').exists()).to.be.true();
+
+    });
+
     it('has an intitial `editorState`', () => {
 
         expect(component.state().editorState).to.exist();
