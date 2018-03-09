@@ -29,9 +29,10 @@ describe('Given `DogWiki`', () => {
 
     });
 
-    it('contains an `DraftEditor`', () => {
+    it('contains a `Decorated(Toolbar)` and a `PluginEditor`', () => {
 
-        expect(component.find('DraftEditor').exists()).to.be.true();
+        expect(component.find('Decorated(Toolbar)').exists()).to.be.true();
+        expect(component.find('PluginEditor').exists()).to.be.true();
 
     });
 
