@@ -15,6 +15,11 @@ li {
 
 .dog-show {
     height: 45vh;
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 2px;
+    box-shadow: inset 0px 1px 8px -3px #ABABAB;
+    background: #fefefe;
 }
 
 .dog-gallery-container {
@@ -41,8 +46,4 @@ li {
 
 .dog-gallery-item {
     width: 33%;
-}
-
-.dog-wiki {
-    height: 45vh;
 }

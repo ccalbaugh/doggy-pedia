@@ -1,5 +1,13 @@
-.editor {
+.dog-wiki {
     box-sizing: border-box;
+    height: 45vh;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+.editor {
+    box-sizing: border-box;  
+    width: 50%;
     border: 1px solid #ddd;
     cursor: text;
     padding: 16px;
