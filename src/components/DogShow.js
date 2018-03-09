@@ -4,10 +4,33 @@ import PropTypes from 'prop-types';
 import { fetchAllBreeds, fetchCurrentBreedImages } from '../actions';
 import DogGallery from './DogGallery';
 
+const GALLERY_SIZE = 3;
+const CYCLE_DELAY = 10000;
+
+function updateCurrentIndex() {
+    const { currentIndex, currentBreedImages } = this.state;
+    console.log('updated Index');
+
+    currentIndex + GALLERY_SIZE <= currentBreedImages.length - 1 ?
+        this.setState({ currentIndex: currentIndex + GALLERY_SIZE }) :
+        this.setState({ currentIndex: 0 });
+}
+
+function handleButtonClick(direction) {
+    const { currentIndex } = this.state;
+    if (direction.toLowerCase() === 'previous') {
+        this.setState({ currentIndex: currentIndex - GALLERY_SIZE })
+    } else if (direction.toLowerCase() === 'next') {
+        this.setState({ currentIndex: currentIndex + GALLERY_SIZE })
+    }
+}
+
 export class DogShow extends Component {
 
     state = {
-        currentBreedImages: []
+        currentBreedImages: [],
+        currentIndex: 0,
+        currentInterval: undefined
     };
 
     componentDidMount() {
@@ -15,17 +38,33 @@ export class DogShow extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        nextProps.currentBreed !== this.props.currentBreed && 
-        nextProps.currentBreed.length === 1 &&
-        this.props.fetchCurrentBreedImages(nextProps.currentBreed); 
-        this.setState({ currentBreedImages: [] });
+        if (nextProps.currentBreed !== this.props.currentBreed) {
+            clearInterval(this.state.currentInterval);
+            this.setState({ currentBreedImages: [], currentIndex: 0, currentInterval: undefined });
+        }
+        
+        if (nextProps.currentBreedImages !== this.props.currentBreedImages) {
+            const currentInterval = setInterval(updateCurrentIndex.bind(this), CYCLE_DELAY);
+            this.setState({ currentBreedImages: nextProps.currentBreedImages, currentInterval });
+        }
+    }
 
-        nextProps.currentBreedImages !== this.props.currentBreedImages &&
-        this.setState({ currentBreedImages: nextProps.currentBreedImages })
+    componentDidUpdate(prevProps) {
+        const { currentBreed, fetchCurrentBreedImages } = this.props;
+
+        prevProps.currentBreed !== currentBreed && 
+        currentBreed.length === 1 &&
+        fetchCurrentBreedImages(currentBreed);
     }
 
     render() {
         const { currentBreed } = this.props;
+        const { currentBreedImages, currentIndex } = this.state;
+        const prevDisabled = currentIndex === 0 || currentBreedImages.length <= GALLERY_SIZE;
+        const nextDisabled = currentIndex >= (currentBreedImages.length - GALLERY_SIZE);
+        const imagesForGallery = currentIndex + GALLERY_SIZE <= currentBreedImages.length - 1 ? 
+                                    currentBreedImages.slice(currentIndex, currentIndex + GALLERY_SIZE) :
+                                    currentBreedImages.slice(currentIndex);
         return (
             <section className="dog-show">
                 {
@@ -34,9 +73,19 @@ export class DogShow extends Component {
                     ) : (
                         currentBreed.length === 1 ? (
                             <div className='dog-gallery-container'>
-                                <button className="previous-button">Prev</button>
-                                <DogGallery breedImages={this.state.currentBreedImages} />
-                                <button className="next-button">Next</button>   
+                                <button className="previous-button" 
+                                        onClick={handleButtonClick.bind(this, 'previous')}
+                                        disabled={prevDisabled}
+                                >
+                                    Prev
+                                </button>
+                                <DogGallery breedImages={imagesForGallery} />
+                                <button className="next-button" 
+                                        onClick={handleButtonClick.bind(this, 'next')}
+                                        disabled={nextDisabled}
+                                >
+                                    Next
+                                </button>   
                             </div>
                         ) : (
                             <ul className="breed-choice-list">

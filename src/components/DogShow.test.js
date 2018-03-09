@@ -14,8 +14,26 @@ describe('Given `DogShow`', () => {
     const mockBreedImages = [
         "https://dog.ceo/api/img/akita/512px-Ainu-Dog.jpg",
         "https://dog.ceo/api/img/akita/Akita_Dog.jpg",
-        "https://dog.ceo/api/img/akita/Akita_Inu_dog.jpg"
+        "https://dog.ceo/api/img/akita/Akita_Inu_dog.jpg",
+        "https://dog.ceo/api/img/akita/Akita_inu_blanc.jpg",
+        "https://dog.ceo/api/img/akita/An_Akita_Inu_resting.jpg",
+        "https://dog.ceo/api/img/akita/Japaneseakita.jpg",
+        "https://dog.ceo/api/img/akita/512px-Akita_inu.jpeg"
     ];
+
+    const newBreedImages = [
+        "https://dog.ceo/api/img/akita/512px-Ainu-Dog.jpg",
+        "https://dog.ceo/api/img/akita/Akita_Dog.jpg"
+    ];
+
+    const initialState = {
+        currentBreedImages: [],
+        currentIndex: 0,
+        currentInterval: undefined
+    };
+
+    const initialIndex = 0;
+    const mockIndex = 6;
 
     function requiredProps(overrides = {}) {
         return {
@@ -35,6 +53,7 @@ describe('Given `DogShow`', () => {
         mockFetchAllBreeds = sandbox.spy();
         mockFetchCurrentBreedImages = sandbox.spy();
         component = renderComponent();
+        component.setState(initialState)
     })
 
     afterEach(() => {
@@ -52,6 +71,117 @@ describe('Given `DogShow`', () => {
         it('should dispatch fetchAllBreeds()', () => {
 
             sinon.assert.calledOnce(mockFetchAllBreeds);
+
+        });
+
+        it('should contain state with `currentBreedImages` set to an empty array', () => {
+
+            expect(component.state().currentBreedImages).to.equal([]);
+
+        });
+
+        it('should contain state with `currentIndex` set to 0', () => {
+
+            expect(component.state().currentIndex).to.equal(0);
+
+        });
+
+        describe('When the currentBreed changes', () => {
+
+            let clock;
+
+            beforeEach(() => {
+                component = renderComponent({ currentBreed: ['akita'] });
+                clock = sinon.useFakeTimers({
+                    shouldAdvanceTime: true
+                });
+            })
+
+            afterEach(() => {
+                clock.restore();
+            })
+
+            it('should set `currentBreedImages` back to an empty array', () => {
+
+                component.setState({ currentBreedImages: mockBreedImages });
+
+                expect(component.state().currentBreedImages).to.equal(mockBreedImages);
+
+                component.setProps({ currentBreed: ['beagle'] })
+
+                expect(component.state().currentBreedImages).to.equal([]);
+
+            });
+
+            it('should set `currentIndex` back to 0', () => {
+
+                component.setState({ currentIndex: mockIndex });
+
+                expect(component.state().currentIndex).to.equal(mockIndex);
+
+                component.setProps({ currentBreed: ['beagle'] });
+
+                expect(component.state().currentIndex).to.equal(0);
+
+            });
+
+            describe('When the component will receive new `currentBreedImages`', () => {
+                
+                beforeEach(() => {
+                    component.setProps({ currentBreedImages: newBreedImages })
+                })
+
+                it('should set the `newBreedImages` in the state', () => {
+
+                    expect(component.state().currentBreedImages).to.equal(newBreedImages);
+
+                });
+
+                it('should create a timer that calls a function every 10 seconds', () => {
+
+                    component.setProps({ currentBreedImages: mockBreedImages });
+
+                    expect(clock.now).to.equal(0);
+
+                    clock.next();
+
+                    expect(clock.now).to.equal(10000);
+
+                });
+
+                describe('When the timer is triggered', () => {
+
+                    it('should update the `currentIndex` in the state', () => {
+
+                        component.setProps({ currentBreedImages: mockBreedImages });
+    
+                        expect(component.state().currentIndex).to.equal(0);
+    
+                        clock.next();
+                    
+                        expect(component.state().currentIndex).to.equal(3);
+
+                    });
+
+                });
+
+                describe('When the currentBreed changes', () => {
+
+                    it('should clear the timer', () => {
+
+                        expect(component.state().currentInterval).not.to.be.undefined();                         
+
+                        component.setProps({ currentBreedImages: mockBreedImages });
+        
+                        component.setProps({ currentBreed: ['beagle'] });
+
+                        expect(component.state().currentInterval).to.be.undefined();                                               
+        
+                    });
+
+                });
+
+            });
 
         });
 
@@ -80,15 +210,15 @@ describe('Given `DogShow`', () => {
 
                 sinon.assert.calledOnce(mockFetchCurrentBreedImages);
 
-            })
+            });
 
             it('should contain a `.dog-gallery-container`', () => {
 
                 expect(component.find('.dog-gallery-container').type()).to.equal('div');
 
-            })
+            });
 
-            describe('Given `.dog-gallery-container`', () => {
+            describe('Given `.dog-gallery-container`', () => {   
 
                 it('should contain a `.previous-button`, a `DogGallery`, and a `.next-button`', () => {
 
@@ -98,6 +228,127 @@ describe('Given `DogShow`', () => {
                     expect(dogGalleryContainer.find('.next-button').type()).to.equal('button');
                     expect(dogGalleryContainer.find('DogGallery').exists()).to.be.true();
                     
+                });
+
+                describe('When the `currentIndex` is 0', () => {
+
+                    describe('And the `currentIndex` + `GALLERY_SIZE` is not greater than the length of `currentBreedImages`', () => {
+
+                        beforeEach(() => {
+                            component.setState({ currentIndex: 0, currentBreedImages: mockBreedImages });
+                        })
+
+                        it('should disable the `.previous-button`', () => {
+
+                            const dogGalleryContainer = component.find('.dog-gallery-container');
+
+                            expect(dogGalleryContainer.find('.previous-button').props().disabled).to.be.true();                    
+        
+                        });
+    
+                        it('should enable the `.next-button`', () => {
+
+                            const dogGalleryContainer = component.find('.dog-gallery-container');                                                
+    
+                            expect(dogGalleryContainer.find('.next-button').props().disabled).to.be.false();                    
+        
+                        });
+
+                    });
+
+                    describe('And the `currentIndex` + `GALLERY_SIZE` is greater than the length of `currentBreedImages`', () => {
+
+                        it('should disable the `.previous-button` and the `.next-button`', () => {
+
+                            const dogGalleryContainer = component.find('.dog-gallery-container');
+
+                            expect(dogGalleryContainer.find('.previous-button').props().disabled).to.be.true();                    
+                            expect(dogGalleryContainer.find('.next-button').props().disabled).to.be.true();                    
+        
+                        });
+
+                    });
+
+                });
+
+                describe('When the `currentIndex` is not 0', () => {
+
+                    describe('And `currentIndex` + `GALLERY_SIZE` is greater than `currentBreedImages`', () => {
+
+                        beforeEach(() => {
+                            component.setState({ currentIndex: mockIndex, currentBreedImages: mockBreedImages });
+                        })
+    
+                        it('should enable the `.previous-button`', () => {
+    
+                            const dogGalleryContainer = component.find('.dog-gallery-container');
+        
+                            expect(dogGalleryContainer.find('.previous-button').props().disabled).to.be.false();                    
+        
+                        });
+    
+                        it('should disable the `.next-button`', () => {
+    
+                            const dogGalleryContainer = component.find('.dog-gallery-container');                        
+        
+                            expect(dogGalleryContainer.find('.next-button').props().disabled).to.be.true();                    
+        
+                        });
+
+                    });
+
+                    describe('And `currentIndex` + `GALLERY_SIZE` is smaller than `currentBreedImages`', () => {
+
+                        beforeEach(() => {
+                            component.setState({ currentIndex: 3, currentBreedImages: mockBreedImages });
+                        })
+
+                        it('should enable the `.previous-button`', () => {
+    
+                            const dogGalleryContainer = component.find('.dog-gallery-container');
+        
+                            expect(dogGalleryContainer.find('.previous-button').props().disabled).to.be.false();                    
+        
+                        });
+
+                        it('should enable the `.next-button`', () => {
+    
+                            const dogGalleryContainer = component.find('.dog-gallery-container');
+        
+                            expect(dogGalleryContainer.find('.next-button').props().disabled).to.be.false();                    
+        
+                        });
+
+                        describe('When the `.previous-button` is clicked', () => {
+
+                            it('should appropriately update the `currentIndex`', () => {
+
+                                expect(component.state().currentIndex).to.equal(3);
+
+                                component.find('.previous-button').simulate('click');
+
+                                expect(component.state().currentIndex).to.equal(initialIndex);
+
+                            });
+
+                        });
+
+                        describe('When the `.next-button` is clicked', () => {
+
+                            it('should appropriately update the `currentIndex`', () => {
+
+                                expect(component.state().currentIndex).to.equal(3);
+
+                                component.find('.next-button').simulate('click');
+
+                                expect(component.state().currentIndex).to.equal(mockIndex);
+
+                            });
+
+                        });
+
+                    });
+
                 });
 
             });

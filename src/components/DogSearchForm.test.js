@@ -15,8 +15,9 @@ describe('Given `DogSearchForm`', () => {
         };
     }
 
-    function renderComponent(props = requiredProps()) {
-        return shallow(<DogSearchForm {...props} />);
+    function renderComponent(props = {}) {
+        const newProps = requiredProps(props);
+        return shallow(<DogSearchForm {...newProps} />);
     }
 
     beforeEach(() => {

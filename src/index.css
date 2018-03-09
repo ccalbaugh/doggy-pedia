@@ -1,0 +1,49 @@
+* {
+    box-sizing: border-box;
+}
+
+li {
+    list-style-type: none;
+}
+
+.dog-search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10vh;
+}
+
+.dog-show {
+    height: 45vh;
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 2px;
+    box-shadow: inset 0px 1px 8px -3px #ABABAB;
+    background: #fefefe;
+}
+
+.dog-gallery-container {
+    display: flex;
+    height: 100%;
+}
+
+.dog-gallery {
+    display: flex;
+    flex-flow: row wrap;
+    overflow: hidden;
+    padding: 0;
+}
+
+.dog-gallery-item {
+    width: 30%;
+    margin: 2px;
+}
+
+.breed-image {
+    width: 100%;
+    height: 100%;
+}
+
+.dog-gallery-item {
+    width: 33%;
+}
