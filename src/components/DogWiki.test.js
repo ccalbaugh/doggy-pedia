@@ -29,18 +29,44 @@ describe('Given `DogWiki`', () => {
 
     });
 
-    it('contains a `Decorated(Toolbar)` and a `PluginEditor`', () => {
+    it('should contain a `div.editing-editor` and a `div.preview-editor`', () => {
 
-        expect(component.find('Decorated(Toolbar)').exists()).to.be.true();
-        expect(component.find('PluginEditor').exists()).to.be.true();
+        expect(component.find('.editing-editor').exists()).to.be.true();
+        expect(component.find('.preview-editor').exists()).to.be.true();
+
+    })
+
+    describe('Given `.editing-editor`', () => {
+
+        it('should contain a `Decorated(Toolbar)` and a `PluginEditor`', () => {
+
+            const editingEditor = component.find('.editing-editor');
+
+            expect(editingEditor.find('Decorated(Toolbar)').exists()).to.be.true();
+            expect(editingEditor.find('PluginEditor').exists()).to.be.true();
+    
+        });
+    
+        it('should contain a `Decorated(EmojiSuggestions)` and a `Decorated(EmojiSelect)`', () => {
+
+            const editingEditor = component.find('.editing-editor');
+    
+            expect(editingEditor.find('Decorated(EmojiSuggestions)').exists()).to.be.true();
+            expect(editingEditor.find('Decorated(EmojiSelect)').exists()).to.be.true();
+    
+        });
 
     });
 
-    it('contains a `Decorated(EmojiSuggestions)` and a `Decorated(EmojiSelect)`', () => {
+    describe('Given `.preview-editor`', () => {
 
-        expect(component.find('Decorated(EmojiSuggestions)').exists()).to.be.true();
-        expect(component.find('Decorated(EmojiSelect)').exists()).to.be.true();
+        it('should contain a `PluginEditor`', () => {
 
+            const previewEditor = component.find('.preview-editor');            
+
+            expect(previewEditor.find('PluginEditor').exists()).to.be.true();
+    
+        });
     });
 
     it('has an intitial `editorState`', () => {
