@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
 import Editor from 'draft-js-plugins-editor';
 import { EditorState } from 'draft-js';
-import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
+import createToolbarPlugin, { Separator } from 'draft-js-static-toolbar-plugin';
+import {
+    ItalicButton,
+    BoldButton,
+    UnderlineButton
+} from 'draft-js-buttons';
+  
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import 'draft-js-emoji-plugin/lib/plugin.css';
 import 'draft-js-static-toolbar-plugin/lib/plugin.css';
 import './DogWiki.css';
 
-const emojiPlugin = createEmojiPlugin();
-const { EmojiSuggestions, EmojiSelect } = emojiPlugin;
 
-const toolbarPlugin = createToolbarPlugin();
+const emojiPlugin = createEmojiPlugin();
+const { EmojiSuggestions, EmojiSelect } = emojiPlugin; 
+
+const toolbarPlugin = createToolbarPlugin({
+    structure: [
+        BoldButton,
+        ItalicButton,
+        UnderlineButton,
+        Separator,
+        EmojiSelect,
+        EmojiSuggestions
+    ]
+  });
 
 const { Toolbar } = toolbarPlugin;
 
@@ -46,9 +62,7 @@ class DogWiki extends Component {
                         ref={(element) => { this.editor = element }}
                     />
                     <button className="preview-button" onClick={preview.bind(this)}>Preview</button>
-                    <Toolbar />
-                    <EmojiSuggestions />
-                    <EmojiSelect />            
+                    <Toolbar />           
                 </div>
                 <div className="editor preview-editor">
                     <Editor
