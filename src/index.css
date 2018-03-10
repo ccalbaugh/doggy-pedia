@@ -2,8 +2,19 @@
     box-sizing: border-box;
 }
 
+html {
+    font-family: 'Segoe UI', 'Tahoma', 'Verdana';
+}
+
 li {
     list-style-type: none;
+}
+
+.dog-app {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .dog-search-form {
@@ -14,36 +25,89 @@ li {
 }
 
 .dog-show {
-    height: 45vh;
-    border: 1px solid #ddd;
-    padding: 16px;
+    position: relative;
+    height: 30vh;
+    width: 80%;
+    margin-top: 2.5vh;
+    margin-bottom: 2.5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     border-radius: 2px;
-    box-shadow: inset 0px 1px 8px -3px #ABABAB;
     background: #fefefe;
+    overflow: auto;
+    box-shadow: 13px 32px 36px -14px hsla(0, 0%, 70%, .19);
+}
+
+.dog-show .dog-show-button {
+    position: relative;
+    background: transparent;
+    border: none;
+    border-radius: 2px;
+    color: #3399FF;
+    box-shadow: inset 0 0 0 2px #3399FF;
+    letter-spacing: 1px;
+}
+
+.dog-show .dog-show-button:hover {
+    cursor: pointer;
+    background: #3399FF;
+    color: #fefefe;
+    transition: .3s ease-in-out;
+}
+
+.dog-show .previous-button {
+    left: 0;
+}
+
+.dog-show .next-button {
+    right: 0; 
+}
+
+.dog-show-button-text {
+    text-orientation: upright;
+    writing-mode: vertical-rl;
 }
 
 .dog-gallery-container {
     display: flex;
     height: 100%;
+    width: 100%;
 }
 
 .dog-gallery {
+    width: 100%;
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
     overflow: hidden;
     padding: 0;
+    margin: 0;
 }
 
 .dog-gallery-item {
-    width: 30%;
-    margin: 2px;
+    width: calc(100% / 3);
+    border-radius: 2px;
 }
 
 .breed-image {
+    position: relative;
     width: 100%;
     height: 100%;
+    border-radius: 2px;
 }
 
-.dog-gallery-item {
-    width: 33%;
+.breed-choice-list {
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.breed-choice-list-item {
+    margin: 5px;
+    padding: 5px 10px;
+    box-shadow: 13px 32px 36px -14px hsla(0, 0%, 70%, .30);
+    background: #fefefe;
+    border: 1px solid rgba(0,0,0,0.01);
 }
