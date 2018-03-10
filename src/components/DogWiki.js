@@ -22,7 +22,6 @@ const toolbarPlugin = createToolbarPlugin({
         BoldButton,
         ItalicButton,
         UnderlineButton,
-        Separator,
         EmojiSelect,
         EmojiSuggestions
     ]
@@ -61,8 +60,10 @@ class DogWiki extends Component {
                         plugins={plugins}
                         ref={(element) => { this.editor = element }}
                     />
-                    <button className="preview-button" onClick={preview.bind(this)}>Preview</button>
-                    <Toolbar />           
+                    <div className="toolbar-container">
+                        <Toolbar />   
+                        <button className="preview-button" onClick={preview.bind(this)}>Preview</button>
+                    </div>       
                 </div>
                 <div className="editor preview-editor">
                     <Editor
