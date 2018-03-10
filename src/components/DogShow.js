@@ -73,18 +73,18 @@ export class DogShow extends Component {
                     ) : (
                         currentBreed.length === 1 ? (
                             <div className='dog-gallery-container'>
-                                <button className="previous-button" 
+                                <button className="dog-show-button previous-button" 
                                         onClick={handleButtonClick.bind(this, 'previous')}
                                         disabled={prevDisabled}
                                 >
-                                    Prev
+                                    <span className="dog-show-button-text">PREV</span>
                                 </button>
                                 <DogGallery breedImages={imagesForGallery} />
-                                <button className="next-button" 
+                                <button className="dog-show-button next-button" 
                                         onClick={handleButtonClick.bind(this, 'next')}
                                         disabled={nextDisabled}
                                 >
-                                    Next
+                                    <span className="dog-show-button-text">NEXT</span>
                                 </button>   
                             </div>
                         ) : (
