@@ -70,7 +70,6 @@ describe('Given `DogWiki`', () => {
             });
 
         });
-    
     });
 
     describe('Given `.preview-editor`', () => {

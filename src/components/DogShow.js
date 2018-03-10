@@ -64,7 +64,7 @@ export class DogShow extends Component {
         const nextDisabled = currentIndex >= (currentBreedImages.length - GALLERY_SIZE);
         const imagesForGallery = currentIndex + GALLERY_SIZE <= currentBreedImages.length - 1 ? 
                                     currentBreedImages.slice(currentIndex, currentIndex + GALLERY_SIZE) :
-                                    currentBreedImages.slice(currentIndex);
+                                    currentBreedImages.slice(currentIndex)
         return (
             <section className="dog-show">
                 {

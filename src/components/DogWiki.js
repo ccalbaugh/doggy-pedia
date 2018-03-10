@@ -7,12 +7,10 @@ import {
     BoldButton,
     UnderlineButton
 } from 'draft-js-buttons';
-  
 import createEmojiPlugin from 'draft-js-emoji-plugin';
 import 'draft-js-emoji-plugin/lib/plugin.css';
 import 'draft-js-static-toolbar-plugin/lib/plugin.css';
 import './DogWiki.css';
-
 
 const emojiPlugin = createEmojiPlugin();
 const { EmojiSuggestions, EmojiSelect } = emojiPlugin; 
