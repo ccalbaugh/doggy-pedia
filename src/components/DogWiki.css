@@ -1,22 +1,69 @@
 .dog-wiki {
     box-sizing: border-box;
-    height: 45vh;
+    width: 80%;
+    height: 50vh;
+    margin-top: 2.5vh;
+    margin-bottom: 2.5vh;
     display: flex;
     flex-flow: row nowrap;
 }
 
 .editor {
-    box-sizing: border-box;  
-    width: 50%;
-    border: 1px solid #ddd;
-    cursor: text;
-    padding: 16px;
-    border-radius: 2px;
-    margin-bottom: 2em;
-    box-shadow: inset 0px 1px 8px -3px #ABABAB;
-    background: #fefefe;
-  }
+  box-sizing: border-box;  
+  width: 47.5%;
+  cursor: text;
+  padding: 16px;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  box-shadow: 13px 32px 36px -14px hsla(0, 0%, 70%, .30);
+  background: #fbfbfb;
+}
+
+.editor:first-of-type {
+  margin-right: 5%;
+}
   
   .editor :global(.public-DraftEditor-content) {
     min-height: 140px;
   }
+
+  .editor .toolbar-container {
+    display: flex;
+    flex-flow: row nowrap;
+  }
+
+  .editor .preview-button {
+    background: #fbfbfb;
+    color: #888;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    box-shadow: 0px 1px 3px 0px rgba(220,220,220,1);
+    z-index: 2;
+    box-sizing: border-box;
+  }
+
+  .editor .preview-button:hover {
+    cursor: pointer;
+  }
+
+  .editor [class*=draftJsEmojiPlugin] button {
+    background: #fbfbfb;
+    color: #888;
+    font-size: 24px;
+    border: 0;
+    vertical-align: bottom;
+    height: 34px;
+    width: 36px;
+  }
+
+  .editor [class*=draftJsEmojiPlugin] button:focus {
+    background: #efefef;
+    color: #444;
+  }
+
+  
+
+
+
+  
