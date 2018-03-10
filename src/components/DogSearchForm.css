@@ -1,0 +1,75 @@
+:focus {
+    outline: none;
+}
+
+.dog-search-form {
+
+}
+
+.input-container {
+    position: relative;
+    margin: 20px;
+    min-width: 150px;
+    width: 250px;
+}
+
+.dog-search-input {
+    border: 0; 
+    padding: 4px 0; 
+    border-bottom: 1px solid #ccc; 
+    background-color: transparent;
+    color: #333; 
+    width: 100%; 
+    box-sizing: border-box; 
+    letter-spacing: 1px;
+}
+
+.dog-search-input ~ label {
+    position: absolute; 
+    left: 0; 
+    width: 100%; 
+    top: 3px; 
+    color: #aaa; 
+    transition: 0.3s; 
+    z-index: -1; 
+    letter-spacing: 0.5px;
+}
+
+.dog-search-input:focus ~ label {
+    top: -16px; 
+    font-size: 12px; 
+    color: #3399FF; 
+    transition: 0.3s;
+}
+
+.dog-search-input ~ .focus-border {
+    position: absolute; 
+    bottom: 0; 
+    left: 0; 
+    width: 0; 
+    height: 2px; 
+    background-color: #3399FF; 
+    transition: 0.4s;
+}
+
+.dog-search-input:focus ~ .focus-border {
+    width: 100%; 
+    transition: 0.4s;
+}
+
+.dog-search-button {
+    font-size: 14px;
+    padding: 4px 8px;
+    background-color: transparent;
+    color: #3399FF;
+    border: 2px solid #3399FF;
+    letter-spacing: 1px;
+    transition: .3s ease-in-out;
+}
+
+.dog-search-button:hover {
+    cursor: pointer;
+    color: #fff;
+    background: #3399FF;
+    transition: .3s ease-in-out;
+}
