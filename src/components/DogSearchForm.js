@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { searchBreed } from '../actions';
+import './DogSearchForm.css';
 
 function handleSubmit(e) {
     e.preventDefault();
@@ -21,12 +22,17 @@ export class DogSearchForm extends Component {
                 className="dog-search-form"
                 onSubmit={handleSubmit.bind(this)}    
             >
-                <input 
-                    type="text" 
-                    className="dog-search-input"
-                    onChange={ (e) => this.setState({ currentInput: e.target.value }) }
-                    value={this.state.currentInput} 
-                />
+                <div className="input-container">
+                    <input 
+                        type="text" 
+                        className="dog-search-input"
+                        id="dog-input"
+                        onChange={ (e) => this.setState({ currentInput: e.target.value }) }
+                        value={this.state.currentInput} 
+                    />
+                    <label htmlFor="dog-input">Search Breeds</label>
+                    <span className='focus-border'></span>
+                </div>
                 <button 
                     type="submit" 
                     className="dog-search-button"
